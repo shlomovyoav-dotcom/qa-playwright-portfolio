@@ -1,13 +1,15 @@
 # Playwright QA portfolio
 
-Public, original Playwright + TypeScript suite. It shows the same *kinds* of checks I ran on a real billing funnel — catalog of record vs what the customer sees, page objects, CI, API contracts, a pinned known bug — rebuilt against two public demos so no employer code, accounts, or prices appear here.
+[![Playwright](https://github.com/shlomovyoav-dotcom/qa-playwright-portfolio/actions/workflows/ci.yml/badge.svg)](https://github.com/shlomovyoav-dotcom/qa-playwright-portfolio/actions/workflows/ci.yml)
+
+A **portfolio sample** of the billing-QA pattern I used at work — catalog of record vs what the customer sees, page objects, CI, API contracts — rewritten against two public demos so no employer code, accounts, or prices appear here. It is not a long-running production suite.
 
 | Layer | Target | What it proves |
 |---|---|---|
 | E2E (POM) | [Sauce Demo](https://www.saucedemo.com) | Login, locked-out user, cart, checkout money-math |
 | Catalog check | Sauce Demo inventory vs `src/data/catalog.ts` | Nightly “page vs system of record” pattern |
 | API | [DummyJSON](https://dummyjson.com) | REST contract, status, JSON shape, money fields |
-| Known bug | Sauce Demo `problem_user` | Sample bug report. The image 404 is not a CI gate — it does not reproduce on every runner |
+| Known bug | Sauce Demo `problem_user` | Sample bug report. The image 404 is documented, not used as a CI gate — it does not reproduce on every runner |
 
 Stack: Playwright Test, TypeScript, Page Object Model, GitHub Actions + GitLab CI, HTML + JUnit reports.
 
@@ -49,7 +51,7 @@ samples/            Bug report, Gherkin, working SQL, Postman collection
 
 ## CI
 
-- GitHub Actions: `.github/workflows/ci.yml` (Chromium, HTML report uploaded on every run).
+- GitHub Actions: `.github/workflows/ci.yml` (Chromium, HTML report uploaded on every run). Latest on `main` should be green.
 - GitLab CI: `.gitlab-ci.yml` (same jobs; this is the runner I used at work).
 
 ## Author
