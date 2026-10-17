@@ -1,0 +1,41 @@
+{
+  "info": {
+    "name": "Yoav Shlomov — public API checks",
+    "description": "Small Postman collection against DummyJSON. Same shape I used against billing and Zephyr APIs: status, JSON shape, money fields. No employer hosts or tokens.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "item": [
+    {
+      "name": "List products",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": "https://dummyjson.com/products?limit=10"
+      }
+    },
+    {
+      "name": "Get product 1",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": "https://dummyjson.com/products/1"
+      }
+    },
+    {
+      "name": "Missing product is 404",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": "https://dummyjson.com/products/99999"
+      }
+    },
+    {
+      "name": "Cart 1 line-item totals",
+      "request": {
+        "method": "GET",
+        "header": [{ "key": "Accept", "value": "application/json" }],
+        "url": "https://dummyjson.com/carts/1"
+      }
+    }
+  ]
+}

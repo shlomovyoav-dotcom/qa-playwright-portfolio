@@ -1,0 +1,26 @@
+{
+  "name": "qa-playwright-portfolio",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Playwright + TypeScript QA portfolio: page-object E2E on a demo store, API contract and money-math checks, and a nightly price check against a catalog of record.",
+  "author": "Yoav Shlomov",
+  "license": "MIT",
+  "type": "module",
+  "engines": {
+    "node": ">=22.12"
+  },
+  "scripts": {
+    "test": "playwright test",
+    "test:e2e": "playwright test --project=e2e",
+    "test:api": "playwright test --project=api",
+    "test:headed": "playwright test --project=e2e --headed",
+    "report": "playwright show-report",
+    "price-check": "node --experimental-strip-types tools/price-check/check-prices.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.0",
+    "@types/node": "^24.0.0",
+    "typescript": "^5.9.0"
+  }
+}
