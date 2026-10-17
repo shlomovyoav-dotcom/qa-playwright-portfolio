@@ -7,7 +7,7 @@ Public, original Playwright + TypeScript suite. It shows the same *kinds* of che
 | E2E (POM) | [Sauce Demo](https://www.saucedemo.com) | Login, locked-out user, cart, checkout money-math |
 | Catalog check | Sauce Demo inventory vs `src/data/catalog.ts` | Nightly “page vs system of record” pattern |
 | API | [DummyJSON](https://dummyjson.com) | REST contract, status, JSON shape, money fields |
-| Known bug | Sauce Demo `problem_user` | `test.fail()` so a documented defect stays visible |
+| Known bug | Sauce Demo `problem_user` | Sample bug report. The image 404 is not a CI gate — it does not reproduce on every runner |
 
 Stack: Playwright Test, TypeScript, Page Object Model, GitHub Actions + GitLab CI, HTML + JUnit reports.
 
@@ -43,7 +43,7 @@ samples/            Bug report, Gherkin, working SQL, Postman collection
 
 1. `src/pages/` — locators live in one place; specs read like a journey.
 2. `tests/e2e/checkout.spec.ts` — totals are *computed* from the catalog and tax rate, not copied from a screenshot.
-3. `tests/e2e/problem-user.spec.ts` — a real demo defect is pinned with `test.fail()`, not silently skipped.
+3. `tests/e2e/problem-user.spec.ts` and `samples/bug-report.md` — the problem_user image defect, written up, and not allowed to flake the suite.
 4. `tools/price-check/check-prices.ts` — exit 1 on mismatch; JSON report for CI.
 5. `samples/` — how I write a bug, a Gherkin plan, a Mixpanel-style SQL check, and a Postman collection.
 

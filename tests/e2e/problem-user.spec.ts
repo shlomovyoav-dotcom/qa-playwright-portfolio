@@ -1,22 +1,31 @@
 import { test, expect } from '../../src/fixtures.ts';
 
 /**
- * Sauce Demo ships a "problem_user" whose product images 404.
- * Pinning it with test.fail() is the public equivalent of leaving a known
- * production defect visible in CI instead of skipping it.
+ * Sauce Demo's problem_user is the persona that ships with broken product images.
+ * That 404 reproduces in some browsers and not others, so CI does not pin it with
+ * test.fail() — a third-party defect that flips would make the suite red for the
+ * wrong reason. The sample bug report still documents it. This test checks the
+ * stable part: the persona can sign in and use the inventory.
  */
 test.use({ persona: 'problem' });
 
-test.fail(
-  'problem_user product images load (known demo defect: images 404)',
-  async ({ loggedIn }) => {
-    const images = loggedIn.items.locator('img');
-    const count = await images.count();
-    expect(count).toBeGreaterThan(0);
+test('problem_user reaches the inventory and can add an item', async ({ loggedIn }) => {
+  await loggedIn.expectLoaded();
+  await loggedIn.addToCart('sauce-labs-backpack');
+  await loggedIn.expectCartCount(1);
 
-    for (let i = 0; i < count; i++) {
-      const ok = await images.nth(i).evaluate((img: HTMLImageElement) => img.naturalWidth > 0);
-      expect(ok, `image ${i} did not load`).toBe(true);
-    }
-  },
-);
+  const images = loggedIn.items.locator('img');
+  const broken = await images.evaluateAll((nodes) =>
+    nodes.filter((node) => {
+      const img = node as HTMLImageElement;
+      return img.complete && img.naturalWidth === 0;
+    }).length,
+  );
+  test.info().annotations.push({
+    type: broken > 0 ? 'known-defect' : 'note',
+    description:
+      broken > 0
+        ? `${broken} product image(s) failed to load for problem_user. See samples/bug-report.md.`
+        : 'problem_user images loaded in this browser. The classic 404 is documented in samples/bug-report.md and is not a CI gate.',
+  });
+});

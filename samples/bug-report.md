@@ -30,4 +30,4 @@ Every product `<img>` on `/inventory.html` has `naturalWidth === 0`. DevTools �
 A customer in this state cannot visually confirm what they are buying. On a real catalog this is the same class as “credits wallet shows the wrong balance after upgrade”: the number (or picture) on screen is not the system of record, and it only reproduces on a specific account state.
 
 ## Notes
-Pinned in CI as `test.fail()` in `tests/e2e/problem-user.spec.ts` so the defect stays visible instead of being skipped.
+`tests/e2e/problem-user.spec.ts` checks that this persona can still use the inventory. The image 404 is not a CI gate: it shows up in some browsers and not in GitHub-hosted Chrome, so pinning it with `test.fail()` made the suite red for the wrong reason.
