@@ -1,19 +1,15 @@
-# Zephyr import shape: CSV columns Name, BDD Script.
-# First person. UI copy in single quotes.
-# Product and prices are the Sauce Demo catalog.
+# Name, BDD Script. First person. UI copy in single quotes.
 
-Feature: Checkout money path
+Feature: Checkout
 
-  Scenario: [CRITICAL] Checkout - Item total, tax and total match the catalog
+  Scenario: [CRITICAL] Checkout - Two items, totals match
     Given I am logged in as a standard user
-    And the catalog lists 'Sauce Labs Backpack' at 29.99 USD
-    And the catalog lists 'Sauce Labs Bike Light' at 9.99 USD
     When I add 'Sauce Labs Backpack' to the cart
     And I add 'Sauce Labs Bike Light' to the cart
     And I continue to checkout with valid shipping
-    Then the item total is 39.98
-    And the tax is 3.20
-    And the total is 43.18
+    Then I see item total 39.98
+    And I see tax 3.20
+    And I see total 43.18
 
   Scenario: Checkout - Blank first name stays on the form
     Given I am logged in as a standard user
