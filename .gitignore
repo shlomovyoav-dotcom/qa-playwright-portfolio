@@ -5,3 +5,5 @@ blob-report/
 .env
 .DS_Store
 tools/price-check/report.json
+tools/triage/triage.json
+tools/triage/triage.md

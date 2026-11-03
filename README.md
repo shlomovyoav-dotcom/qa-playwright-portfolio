@@ -10,6 +10,7 @@ A **portfolio sample** of the billing-QA pattern I used at work — catalog of r
 | Catalog check | Sauce Demo inventory vs `src/data/catalog.ts` | Nightly “page vs system of record” pattern |
 | API | [DummyJSON](https://dummyjson.com) | REST contract, status, JSON shape, money fields |
 | Known bug | Sauce Demo `problem_user` | Sample bug report. The image 404 is documented, not used as a CI gate — it does not reproduce on every runner |
+| Triage | Playwright JSON report | Groups failed and flaky tests by error signature and writes a bug-report skeleton per group; optional Claude summary |
 
 Stack: Playwright Test, TypeScript, Page Object Model, GitHub Actions + GitLab CI, HTML + JUnit reports.
 
@@ -24,6 +25,8 @@ npm test                 # e2e + api
 npm run test:e2e
 npm run test:api
 npm run price-check      # scrape the live inventory, diff against the catalog
+npm run triage           # group failures from the last run into bug-report skeletons
+npm run triage -- --llm  # same, plus a two-sentence draft per group (needs ANTHROPIC_API_KEY)
 npm run report           # open the last HTML report
 ```
 
@@ -38,6 +41,8 @@ src/fixtures.ts     Extends Playwright with those pages and a `loggedIn` fixture
 tests/e2e/          UI journeys
 tests/api/          REST checks
 tools/price-check/  Standalone catalog vs storefront script (the Slack-alert pattern, minus Slack)
+tools/triage/       Failure clustering + bug-report skeletons; the LLM step is optional and never gates CI
+tests/unit/         Pure-logic tests for the triage clustering (no browser)
 samples/            Bug report, Gherkin, working SQL, Postman collection
 ```
 
@@ -48,6 +53,7 @@ samples/            Bug report, Gherkin, working SQL, Postman collection
 3. `tests/e2e/problem-user.spec.ts` and `samples/bug-report.md` — the problem_user image defect, written up, and not allowed to flake the suite.
 4. `tools/price-check/check-prices.ts` — exit 1 on mismatch; JSON report for CI.
 5. `samples/` — how I write a bug, a Gherkin plan, a Mixpanel-style SQL check, and a Postman collection.
+6. `tools/triage/cluster.ts` — volatile parts of an error (ids, paths, durations, selectors) are stripped so retries and sibling tests land in one group; `tests/unit/triage.spec.ts` pins that behaviour. CI uploads `triage.md` as an artifact on every run, green or red.
 
 ## CI
 

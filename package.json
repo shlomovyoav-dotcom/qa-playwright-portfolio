@@ -13,9 +13,11 @@
     "test": "playwright test",
     "test:e2e": "playwright test --project=e2e",
     "test:api": "playwright test --project=api",
+    "test:unit": "playwright test --project=unit",
     "test:headed": "playwright test --project=e2e --headed",
     "report": "playwright show-report",
     "price-check": "node --experimental-strip-types tools/price-check/check-prices.ts",
+    "triage": "node --experimental-strip-types tools/triage/triage.ts",
     "typecheck": "tsc --noEmit"
   },
   "devDependencies": {
