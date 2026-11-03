@@ -14,6 +14,7 @@ export default defineConfig({
     ['list'],
     ['html', { open: 'never', outputFolder: 'playwright-report' }],
     ['junit', { outputFile: 'test-results/junit.xml' }],
+    ['json', { outputFile: 'test-results/results.json' }],
   ],
   use: {
     // saucedemo exposes stable hooks as data-test="…"
@@ -23,6 +24,10 @@ export default defineConfig({
     video: 'retain-on-failure',
   },
   projects: [
+    {
+      name: 'unit',
+      testDir: './tests/unit',
+    },
     {
       name: 'e2e',
       testDir: './tests/e2e',
